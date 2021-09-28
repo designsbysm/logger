@@ -6,21 +6,13 @@ type loggerOptions struct {
 	location  string
 }
 
-// LevelError todo
 const LevelError = 1
-
-// LevelWarning todo
 const LevelWarning = 2
-
-// LevelInfo todo
 const LevelInfo = 3
-
-// LevelDebug todo
 const LevelDebug = 4
 
 var options loggerOptions
 
-// SetOptions todo
 func SetOptions(cli int, file int, location string) {
 	options = loggerOptions{
 		cliLevel:  cli,
@@ -29,7 +21,6 @@ func SetOptions(cli int, file int, location string) {
 	}
 }
 
-// Write todo
 func Write(level int, args ...interface{}) {
 	levelText := ""
 	switch level {
