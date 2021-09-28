@@ -1,28 +1,28 @@
 package logger
 
-type Options struct {
+type loggerOptions struct {
 	cliLevel  int
 	fileLevel int
 	location  string
 }
 
-// LogError todo
-const LogError = 1
+// LevelError todo
+const LevelError = 1
 
-// LogWarning todo
-const LogWarning = 2
+// LevelWarning todo
+const LevelWarning = 2
 
-// LogInfo todo
-const LogInfo = 3
+// LevelInfo todo
+const LevelInfo = 3
 
-// LogDebug todo
-const LogDebug = 4
+// LevelDebug todo
+const LevelDebug = 4
 
-var options Options
+var options loggerOptions
 
 // SetOptions todo
 func SetOptions(cli int, file int, location string) {
-	options = Options{
+	options = loggerOptions{
 		cliLevel:  cli,
 		fileLevel: file,
 		location:  location,
@@ -33,13 +33,13 @@ func SetOptions(cli int, file int, location string) {
 func Write(level int, args ...interface{}) {
 	levelText := ""
 	switch level {
-	case LogError:
+	case LevelError:
 		levelText = "ERROR"
-	case LogWarning:
+	case LevelWarning:
 		levelText = "WARN"
-	case LogInfo:
+	case LevelInfo:
 		levelText = "INFO"
-	case LogDebug:
+	case LevelDebug:
 		levelText = "DEBUG"
 	default:
 		levelText = "UNKNOWN"
@@ -51,13 +51,13 @@ func Write(level int, args ...interface{}) {
 
 	if level <= options.cliLevel {
 		switch level {
-		case LogError:
+		case LevelError:
 			levelText = "\033[1;31m" + levelText
-		case LogWarning:
+		case LevelWarning:
 			levelText = "\033[0;33m" + levelText
-		case LogInfo:
+		case LevelInfo:
 			levelText = "\033[0;36m" + levelText
-		case LogDebug:
+		case LevelDebug:
 			levelText = "\033[0;32m" + levelText
 		default:
 			levelText = "\033[0m" + levelText
