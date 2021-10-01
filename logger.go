@@ -27,9 +27,9 @@ func Write(level int, args ...interface{}) {
 	case LevelError:
 		levelText = "ERROR"
 	case LevelWarning:
-		levelText = "WARN"
+		levelText = "WARN "
 	case LevelInfo:
-		levelText = "INFO"
+		levelText = "INFO "
 	case LevelDebug:
 		levelText = "DEBUG"
 	default:
@@ -43,7 +43,7 @@ func Write(level int, args ...interface{}) {
 	if level <= options.cliLevel {
 		switch level {
 		case LevelError:
-			levelText = "\033[1;31m" + levelText
+			levelText = "\033[0;31m" + levelText
 		case LevelWarning:
 			levelText = "\033[0;33m" + levelText
 		case LevelInfo:
