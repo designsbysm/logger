@@ -21,39 +21,48 @@ func SetOptions(cli int, file int, location string) {
 	}
 }
 
-func Write(level int, args ...interface{}) {
-	levelText := ""
+func getColor(level int) string {
+	color := ""
+
 	switch level {
 	case LevelError:
-		levelText = "ERROR"
+		color = "\033[0;31m"
 	case LevelWarning:
-		levelText = "WARN "
+		color = "\033[0;33m"
 	case LevelInfo:
-		levelText = "INFO "
+		color = "\033[0;36m"
 	case LevelDebug:
-		levelText = "DEBUG"
-	default:
-		levelText = "UNKNOWN"
+		color = "\033[0;32m"
 	}
 
+	return color
+}
+
+func getTitle(level int) string {
+	title := ""
+
+	switch level {
+	case LevelError:
+		title = "ERROR"
+	case LevelWarning:
+		title = "WARN "
+	case LevelInfo:
+		title = "INFO "
+	case LevelDebug:
+		title = "DEBUG"
+	}
+
+	return title
+}
+
+func Write(level int, args ...interface{}) {
 	if level <= options.fileLevel {
-		writeToFile(levelText, args...)
+		title := getTitle(level)
+		writeToFile(title, args...)
 	}
 
 	if level <= options.cliLevel {
-		switch level {
-		case LevelError:
-			levelText = "\033[0;31m" + levelText
-		case LevelWarning:
-			levelText = "\033[0;33m" + levelText
-		case LevelInfo:
-			levelText = "\033[0;36m" + levelText
-		case LevelDebug:
-			levelText = "\033[0;32m" + levelText
-		default:
-			levelText = "\033[0m" + levelText
-		}
-
-		writeToConsole(levelText, args...)
+		color := getColor(level)
+		writeToConsole(color, args...)
 	}
 }

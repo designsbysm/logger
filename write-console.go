@@ -5,14 +5,11 @@ import (
 	"time"
 )
 
-func writeToConsole(title string, args ...interface{}) {
-	if options.cliLevel == 0 {
-		options.cliLevel = 4
-	}
-
+func writeToConsole(color string, args ...interface{}) {
 	var message []interface{}
-	message = append(message, fmt.Sprintf("\033[0;90m[%s]", time.Now().Format("15:04:05")))
-	message = append(message, title)
+
+	format := "\033[0;90m[%s]%s"
+	message = append(message, fmt.Sprintf(format, time.Now().Format("15:04:05"), color))
 	message = append(message, args...)
 	message = append(message, "\033[0m")
 
