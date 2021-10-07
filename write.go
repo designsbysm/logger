@@ -36,7 +36,12 @@ func Write(level int, args ...interface{}) {
 		}
 
 		if w.includeTitle {
-			message += fmt.Sprintf(" %s", levelInfo.title)
+			format := " %s"
+			if message == "" {
+				format = "%s"
+			}
+
+			message += fmt.Sprintf(format, levelInfo.title)
 		}
 
 		// output args
