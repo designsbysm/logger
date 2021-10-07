@@ -27,7 +27,7 @@ func Write(level int, args ...interface{}) {
 				message += colorTime
 			}
 
-			message += fmt.Sprintf("[%s]", time.Now().Format(w.timeFormat))
+			message += fmt.Sprintf("%s", time.Now().Format(w.timeFormat))
 		}
 
 		// title
