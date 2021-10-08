@@ -1,3 +1,3 @@
 # Logger
 
-Simple Go file and/or console logging utility
+Go logging utility that allows writing to multiple io.Writer interface.

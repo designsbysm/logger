@@ -17,10 +17,24 @@ const LevelWarning = 2
 const LevelInfo = 3
 const LevelDebug = 4
 
-type loggerOptions struct {
+type options struct {
 	colorful     bool
 	includeTitle bool
 	logLevel     int
 	timeFormat   string
 	writer       io.Writer
+}
+
+var writers []options
+
+func New(writer io.Writer, logLevel int, colorful bool, includeTitle bool, timeFormat string) {
+	newWriter := options{
+		colorful:     colorful,
+		includeTitle: includeTitle,
+		logLevel:     logLevel,
+		timeFormat:   timeFormat,
+		writer:       writer,
+	}
+
+	writers = append(writers, newWriter)
 }

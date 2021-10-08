@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -8,8 +9,7 @@ import (
 
 func Write(level int, args ...interface{}) {
 	if len(writers) == 0 {
-		fmt.Println("logger.Write: no log writers defined")
-		return
+		panic(errors.New("logger.Write: no log writers defined"))
 	}
 
 	levelInfo := getLevelInfo(level)
@@ -57,11 +57,13 @@ func Write(level int, args ...interface{}) {
 			message += colorReset
 		}
 
-		if message != "" {
-			fmt.Fprintln(w.writer, message)
-		} else {
-			fmt.Fprintln(w.writer, "logger.Write: nothing to log")
-			return
+		if message == "" {
+			message = "nothing to log"
+		}
+
+		_, err := fmt.Fprintln(w.writer, message)
+		if err != nil {
+			panic(err)
 		}
 	}
 }
