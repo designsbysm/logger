@@ -27,7 +27,7 @@ func Write(level int, args ...interface{}) {
 				message += colorTime
 			}
 
-			message += fmt.Sprintf("%s", time.Now().Format(w.timeFormat))
+			message += fmt.Sprintf("%s ", time.Now().Format(w.timeFormat))
 		}
 
 		// title
@@ -36,20 +36,20 @@ func Write(level int, args ...interface{}) {
 		}
 
 		if w.includeTitle {
-			format := " %s"
-			if message == "" {
-				format = "%s"
-			}
-
-			message += fmt.Sprintf(format, levelInfo.title)
+			message += fmt.Sprintf("%s ", levelInfo.title)
 		}
 
 		// output args
-		for _, item := range args {
+		for index, item := range args {
+			format := " %s"
+			if index == 0 {
+				format = "%s"
+			}
+
 			output := fmt.Sprint(item)
 			output = strings.TrimSpace(output)
 
-			message += fmt.Sprintf(" %s", output)
+			message += fmt.Sprintf(format, output)
 		}
 
 		// clean up

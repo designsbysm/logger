@@ -5,7 +5,7 @@ import (
 )
 
 const colorDebug = "\033[0;32m"
-const colorError = "\033[0;31m"
+const colorError = "\033[0;91m"
 const colorInfo = "\033[0;36m"
 const colorReset = "\033[0m"
 const colorTime = "\033[0;90m"
