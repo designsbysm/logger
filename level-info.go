@@ -14,6 +14,9 @@ func getLevelInfo(level int) levelInfo {
 	}
 
 	switch level {
+	case LevelCritical:
+		info.color = colorCritical
+		info.title = "CRITICAL"
 	case LevelError:
 		info.color = colorError
 		info.title = "ERROR"
