@@ -22,12 +22,12 @@ func Write(level int, args ...interface{}) {
 		var message string
 
 		// timestamp
-		if w.timeFormat != "" {
+		if w.timestamp != "" {
 			if w.colorful {
 				message += colorTime
 			}
 
-			message += fmt.Sprintf("%s ", time.Now().Format(w.timeFormat))
+			message += fmt.Sprintf("%s ", time.Now().Format(w.timestamp))
 		}
 
 		// title
@@ -35,7 +35,7 @@ func Write(level int, args ...interface{}) {
 			message += levelInfo.color
 		}
 
-		if w.includeTitle {
+		if w.title {
 			message += fmt.Sprintf("%s ", levelInfo.title)
 		}
 

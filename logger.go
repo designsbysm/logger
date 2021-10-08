@@ -20,22 +20,22 @@ const LevelInfo = 4
 const LevelDebug = 5
 
 type options struct {
-	colorful     bool
-	includeTitle bool
-	logLevel     int
-	timeFormat   string
-	writer       io.Writer
+	colorful  bool
+	title     bool
+	logLevel  int
+	timestamp string
+	writer    io.Writer
 }
 
 var writers []options
 
-func New(writer io.Writer, logLevel int, colorful bool, includeTitle bool, timeFormat string) {
+func New(writer io.Writer, logLevel int, colorful bool, title bool, timestamp string) {
 	newWriter := options{
-		colorful:     colorful,
-		includeTitle: includeTitle,
-		logLevel:     logLevel,
-		timeFormat:   timeFormat,
-		writer:       writer,
+		colorful:  colorful,
+		title:     title,
+		logLevel:  logLevel,
+		timestamp: timestamp,
+		writer:    writer,
 	}
 
 	writers = append(writers, newWriter)
