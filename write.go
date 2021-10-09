@@ -10,12 +10,14 @@ import (
 func Write(level int, args ...interface{}) {
 	if len(writers) == 0 {
 		panic(errors.New("logger.Write: no log writers defined"))
+	} else if level < LevelCritical {
+		return
 	}
 
 	levelInfo := getLevelInfo(level)
 
 	for _, w := range writers {
-		if level > w.logLevel {
+		if level > w.level {
 			continue
 		}
 

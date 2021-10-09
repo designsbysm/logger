@@ -13,27 +13,30 @@ const colorTime = "\033[0;90m"
 const colorWarning = "\033[0;33m"
 const colorWhite = "\033[0;37m"
 
-const LevelCritical = 1
-const LevelError = 2
-const LevelWarning = 3
-const LevelInfo = 4
-const LevelDebug = 5
+const (
+	LevelSilent = iota
+	LevelCritical
+	LevelError
+	LevelWarning
+	LevelInfo
+	LevelDebug
+)
 
 type options struct {
 	colorful  bool
 	title     bool
-	logLevel  int
+	level     int
 	timestamp string
 	writer    io.Writer
 }
 
 var writers []options
 
-func New(writer io.Writer, logLevel int, colorful bool, title bool, timestamp string) {
+func New(writer io.Writer, level int, colorful bool, title bool, timestamp string) {
 	newWriter := options{
 		colorful:  colorful,
 		title:     title,
-		logLevel:  logLevel,
+		level:     level,
 		timestamp: timestamp,
 		writer:    writer,
 	}
