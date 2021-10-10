@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"errors"
 	"io"
 )
 
@@ -32,7 +33,11 @@ type options struct {
 
 var writers []options
 
-func New(writer io.Writer, level int, colorful bool, title bool, timestamp string) {
+func New(writer io.Writer, level int, colorful bool, title bool, timestamp string) error {
+	if writer == nil {
+		return errors.New("writer is required")
+	}
+
 	newWriter := options{
 		colorful:  colorful,
 		title:     title,
@@ -42,4 +47,6 @@ func New(writer io.Writer, level int, colorful bool, title bool, timestamp strin
 	}
 
 	writers = append(writers, newWriter)
+
+	return nil
 }
