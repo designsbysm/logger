@@ -11,7 +11,7 @@ func TestShouldCreateWriter(t *testing.T) {
 	}
 
 	var buf bytes.Buffer
-	New(&buf, LevelDebug, false, false, "")
+	New(&buf, LevelDebug, "", 0)
 
 	if len(writers) == 0 {
 		t.Errorf("should have writer, got: %v", writers)
@@ -19,7 +19,7 @@ func TestShouldCreateWriter(t *testing.T) {
 }
 
 func TestShouldFailWithoutWriter(t *testing.T) {
-	err := New(nil, LevelDebug, false, false, "")
+	err := New(nil, LevelDebug, "", 0)
 
 	if err == nil {
 		t.Errorf("should have error, got: %v", err)

@@ -12,7 +12,7 @@ import (
 func TestShouldHaveMessage(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 9, false, false, "")
+	New(&buf, 9, "", 0)
 	Write(LevelError, "test message")
 
 	if len(buf.Bytes()) == 0 {
@@ -23,7 +23,7 @@ func TestShouldHaveMessage(t *testing.T) {
 func TestShouldNotHaveMessage1(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 1, false, false, "")
+	New(&buf, 1, "", 0)
 	Write(LevelError, "test message")
 
 	if len(buf.Bytes()) > 1 {
@@ -34,7 +34,7 @@ func TestShouldNotHaveMessage1(t *testing.T) {
 func TestShouldNotHaveMessage2(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 9, false, false, "")
+	New(&buf, 9, "", 0)
 	Write(LevelSilent, "test message")
 
 	if len(buf.Bytes()) > 1 {
@@ -45,7 +45,7 @@ func TestShouldNotHaveMessage2(t *testing.T) {
 func TestShouldBeColorful(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 9, true, false, "[]")
+	New(&buf, 9, "[]", FlagColorful)
 	Write(LevelError, "test message")
 
 	exemplar := []byte(fmt.Sprintf("%s[] %stest message%s\n", colorTime, colorError, colorReset))
@@ -58,7 +58,7 @@ func TestShouldBeColorful(t *testing.T) {
 func TestShouldNotBeColorful(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 9, false, false, "")
+	New(&buf, 9, "", 0)
 	Write(LevelError, "test message")
 
 	if buf.String() != "test message\n" {
@@ -69,7 +69,7 @@ func TestShouldNotBeColorful(t *testing.T) {
 func TestShouldHaveTitle(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 9, false, true, "")
+	New(&buf, 9, "", FlagTitle)
 	Write(LevelError, "test message")
 
 	if !strings.Contains(buf.String(), "ERROR") {
@@ -80,7 +80,7 @@ func TestShouldHaveTitle(t *testing.T) {
 func TestShouldNotHaveTitle(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 9, false, false, "")
+	New(&buf, 9, "", 0)
 	Write(LevelError, "test message")
 
 	if strings.Contains(buf.String(), "ERROR") {
@@ -91,7 +91,7 @@ func TestShouldNotHaveTitle(t *testing.T) {
 func TestShouldHaveTimestamp(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 9, false, false, "[15:04:05]")
+	New(&buf, 9, "[15:04:05]", 0)
 	Write(LevelError, "test message")
 
 	re := regexp.MustCompile("[0-9]{2}:[0-9]{2}:[0-9]{2}")
@@ -104,7 +104,7 @@ func TestShouldHaveTimestamp(t *testing.T) {
 func TestShouldNotHaveTimestamp(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 9, false, false, "")
+	New(&buf, 9, "", 0)
 	Write(LevelError, "test message")
 
 	if buf.String() != "test message\n" {
@@ -115,7 +115,7 @@ func TestShouldNotHaveTimestamp(t *testing.T) {
 func TestShouldReportNothingToLog(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, 9, false, false, "")
+	New(&buf, 9, "", 0)
 	Write(LevelError, "")
 
 	if buf.String() != "nothing to log\n" {
@@ -148,6 +148,6 @@ func TestShouldPanicWriteError(t *testing.T) {
 		}
 	}()
 
-	New(errorWriter{}, 8, false, false, "")
+	New(errorWriter{}, 8, "", 0)
 	Write(LevelError, "test message")
 }
