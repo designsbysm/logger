@@ -1,21 +1,21 @@
 package logger
 
 func Critical(args ...interface{}) {
-	Write(LevelCritical, args)
+	Write(LevelCritical, args...)
 }
 
 func Debug(args ...interface{}) {
-	Write(LevelDebug, args)
+	Write(LevelDebug, args...)
 }
 
 func Error(args ...interface{}) {
-	Write(LevelError, args)
+	Write(LevelError, args...)
 }
 
 func Info(args ...interface{}) {
-	Write(LevelInfo, args)
+	Write(LevelInfo, args...)
 }
 
 func Warning(args ...interface{}) {
-	Write(LevelWarning, args)
+	Write(LevelWarning, args...)
 }
