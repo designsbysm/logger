@@ -25,6 +25,8 @@ const (
 
 const (
 	FlagColorful = 1 << iota
+	FlagFileName
+	FlagFilePath
 	FlagTitle
 )
 

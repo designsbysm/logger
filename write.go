@@ -23,6 +23,7 @@ func Write(level int, args ...interface{}) {
 
 		var message string
 		flagColorful := w.flags&FlagColorful != 0
+		flagFile := w.flags&FlagFileName | w.flags&FlagFilePath
 		flagTitle := w.flags&FlagTitle != 0
 
 		// timestamp
@@ -32,6 +33,15 @@ func Write(level int, args ...interface{}) {
 			}
 
 			message += fmt.Sprintf("%s ", time.Now().Format(w.timestamp))
+		}
+
+		// filename
+		if flagFile != 0 {
+			file := fileWithLineNum(flagFile)
+
+			if file != "" {
+				message += fmt.Sprintf("%s ", file)
+			}
 		}
 
 		// title
