@@ -23,9 +23,13 @@ const (
 	LevelDebug
 )
 
+const (
+	FlagColorful = 1 << iota
+	FlagTitle
+)
+
 type options struct {
-	colorful  bool
-	title     bool
+	flags     int
 	level     int
 	timestamp string
 	writer    io.Writer
@@ -33,14 +37,13 @@ type options struct {
 
 var writers []options
 
-func New(writer io.Writer, level int, colorful bool, title bool, timestamp string) error {
+func New(writer io.Writer, level int, timestamp string, flags int) error {
 	if writer == nil {
-		return errors.New("writer is required")
+		return errors.New("io.Writer is required")
 	}
 
 	newWriter := options{
-		colorful:  colorful,
-		title:     title,
+		flags:     flags,
 		level:     level,
 		timestamp: timestamp,
 		writer:    writer,

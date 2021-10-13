@@ -22,10 +22,12 @@ func Write(level int, args ...interface{}) {
 		}
 
 		var message string
+		flagColorful := w.flags&FlagColorful != 0
+		flagTitle := w.flags&FlagTitle != 0
 
 		// timestamp
 		if w.timestamp != "" {
-			if w.colorful {
+			if flagColorful {
 				message += colorTime
 			}
 
@@ -33,11 +35,11 @@ func Write(level int, args ...interface{}) {
 		}
 
 		// title
-		if w.colorful {
+		if flagColorful {
 			message += levelInfo.color
 		}
 
-		if w.title {
+		if flagTitle {
 			message += fmt.Sprintf("%s ", levelInfo.title)
 		}
 
@@ -55,7 +57,7 @@ func Write(level int, args ...interface{}) {
 		}
 
 		// clean up
-		if w.colorful {
+		if flagColorful {
 			message += colorReset
 		}
 
