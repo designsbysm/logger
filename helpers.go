@@ -1,5 +1,7 @@
 package logger
 
+import "fmt"
+
 func Critical(args ...interface{}) {
 	Write(LevelCritical, args...)
 }
@@ -18,4 +20,8 @@ func Info(args ...interface{}) {
 
 func Warning(args ...interface{}) {
 	Write(LevelWarning, args...)
+}
+
+func Struct(v interface{}) {
+	Write(LevelDebug, fmt.Sprintf("%+v\n", v))
 }
