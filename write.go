@@ -1,4 +1,4 @@
-package logger
+package timber
 
 import (
 	"errors"
@@ -9,7 +9,7 @@ import (
 
 func Write(level int, args ...interface{}) {
 	if len(writers) == 0 {
-		panic(errors.New("logger.Write: no log writers defined"))
+		panic(errors.New("timber.Write: no log writers defined"))
 	} else if level < LevelCritical {
 		return
 	}

@@ -1,4 +1,4 @@
-package logger
+package timber
 
 type levelInfo struct {
 	color string
