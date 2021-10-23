@@ -22,7 +22,7 @@ func fileWithLineNum(flag int) string {
 
 	if flag&FlagFileName != 0 {
 		file = filepath.Base(file)
-	} else {
+	} else if flag&FlagFileProject != 0 {
 		current, err := os.Getwd()
 		if err != nil {
 			return ""

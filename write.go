@@ -23,7 +23,7 @@ func Write(level int, args ...interface{}) {
 
 		var message string
 		flagColorful := w.flags&FlagColorful != 0
-		flagFile := w.flags&FlagFileName | w.flags&FlagFilePath
+		flagFile := w.flags&FlagFileName | w.flags&FlagFileProject | w.flags&FlagFileAbsolute
 		flagTitle := w.flags&FlagTitle != 0
 
 		// timestamp
