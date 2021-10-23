@@ -6,12 +6,10 @@ import (
 )
 
 func TestShouldCreateWriter(t *testing.T) {
-	if len(writers) != 0 {
-		t.Errorf("writers should empty, got: %v", writers)
-	}
+	writers = []options{}
 
 	var buf bytes.Buffer
-	New(&buf, LevelDebug, "", 0)
+	New(&buf, LevelDebug, "", FlagNone)
 
 	if len(writers) == 0 {
 		t.Errorf("should have writer, got: %v", writers)
@@ -19,7 +17,7 @@ func TestShouldCreateWriter(t *testing.T) {
 }
 
 func TestShouldFailWithoutWriter(t *testing.T) {
-	err := New(nil, LevelDebug, "", 0)
+	err := New(nil, LevelDebug, "", FlagNone)
 
 	if err == nil {
 		t.Errorf("should have error, got: %v", err)
