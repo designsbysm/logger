@@ -12,7 +12,11 @@ import (
 func TestShouldHaveMessage(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "", FlagNone)
+	err := New(&buf, LevelAll, "", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 
 	if len(buf.Bytes()) == 0 {
@@ -23,7 +27,11 @@ func TestShouldHaveMessage(t *testing.T) {
 func TestShouldNotHaveMessage1(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelCritical, "", FlagNone)
+	err := New(&buf, LevelCritical, "", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 
 	if len(buf.Bytes()) > 1 {
@@ -34,7 +42,11 @@ func TestShouldNotHaveMessage1(t *testing.T) {
 func TestShouldNotHaveMessage2(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "", FlagNone)
+	err := New(&buf, LevelAll, "", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelSilent, "test message")
 
 	if len(buf.Bytes()) > 1 {
@@ -45,7 +57,11 @@ func TestShouldNotHaveMessage2(t *testing.T) {
 func TestShouldBeColorful(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "[]", FlagColorful)
+	err := New(&buf, LevelAll, "[]", FlagColorful)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 
 	exemplar := []byte(fmt.Sprintf("%s[] %stest message%s\n", colorTime, colorError, colorReset))
@@ -58,7 +74,11 @@ func TestShouldBeColorful(t *testing.T) {
 func TestShouldNotBeColorful(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "", FlagNone)
+	err := New(&buf, LevelAll, "", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 
 	if buf.String() != "test message\n" {
@@ -69,7 +89,11 @@ func TestShouldNotBeColorful(t *testing.T) {
 func TestShouldHaveFilename(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "", FlagFileName)
+	err := New(&buf, LevelAll, "", FlagFileName)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 
 	if !strings.Contains(buf.String(), "write_test.go") {
@@ -80,7 +104,11 @@ func TestShouldHaveFilename(t *testing.T) {
 func TestShouldHaveTitle(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "", FlagTitle)
+	err := New(&buf, LevelAll, "", FlagTitle)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 
 	if !strings.Contains(buf.String(), "ERROR") {
@@ -91,7 +119,11 @@ func TestShouldHaveTitle(t *testing.T) {
 func TestShouldNotHaveTitle(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "", FlagNone)
+	err := New(&buf, LevelAll, "", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 
 	if strings.Contains(buf.String(), "ERROR") {
@@ -102,7 +134,11 @@ func TestShouldNotHaveTitle(t *testing.T) {
 func TestShouldHaveTimestamp(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "[15:04:05]", FlagNone)
+	err := New(&buf, LevelAll, "[15:04:05]", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 
 	re := regexp.MustCompile("[0-9]{2}:[0-9]{2}:[0-9]{2}")
@@ -115,7 +151,11 @@ func TestShouldHaveTimestamp(t *testing.T) {
 func TestShouldNotHaveTimestamp(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "", FlagNone)
+	err := New(&buf, LevelAll, "", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 
 	if buf.String() != "test message\n" {
@@ -126,7 +166,11 @@ func TestShouldNotHaveTimestamp(t *testing.T) {
 func TestShouldReportNothingToLog(t *testing.T) {
 	var buf bytes.Buffer
 
-	New(&buf, LevelAll, "", FlagNone)
+	err := New(&buf, LevelAll, "", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "")
 
 	if buf.String() != "nothing to log\n" {
@@ -159,6 +203,10 @@ func TestShouldPanicWriteError(t *testing.T) {
 		}
 	}()
 
-	New(errorWriter{}, 8, "", FlagNone)
+	err := New(errorWriter{}, 8, "", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Write(LevelError, "test message")
 }

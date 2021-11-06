@@ -13,7 +13,11 @@ func TestHelperCritical(t *testing.T) {
 	message := "test message"
 	exemplar := fmt.Sprintf("%s %s\n", info.title, message)
 
-	New(&buf, LevelAll, "", FlagTitle)
+	err := New(&buf, LevelAll, "", FlagTitle)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Critical(message)
 
 	if buf.String() != exemplar {
@@ -28,7 +32,11 @@ func TestHelperDebug(t *testing.T) {
 	message := "test message"
 	exemplar := fmt.Sprintf("%s %s\n", info.title, message)
 
-	New(&buf, LevelAll, "", FlagTitle)
+	err := New(&buf, LevelAll, "", FlagTitle)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Debug(message)
 
 	if buf.String() != exemplar {
@@ -43,7 +51,11 @@ func TestHelperError(t *testing.T) {
 	message := "test message"
 	exemplar := fmt.Sprintf("%s %s\n", info.title, message)
 
-	New(&buf, LevelAll, "", FlagTitle)
+	err := New(&buf, LevelAll, "", FlagTitle)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Error(message)
 
 	if buf.String() != exemplar {
@@ -58,7 +70,11 @@ func TestHelperInfo(t *testing.T) {
 	message := "test message"
 	exemplar := fmt.Sprintf("%s %s\n", info.title, message)
 
-	New(&buf, LevelAll, "", FlagTitle)
+	err := New(&buf, LevelAll, "", FlagTitle)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Info(message)
 
 	if buf.String() != exemplar {
@@ -73,7 +89,11 @@ func TestHelperStruct(t *testing.T) {
 	message := []string{}
 	exemplar := fmt.Sprintf("%s %+v\n", info.title, message)
 
-	New(&buf, LevelAll, "", FlagTitle)
+	err := New(&buf, LevelAll, "", FlagTitle)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Struct(message)
 
 	if buf.String() != exemplar {
@@ -88,7 +108,11 @@ func TestHelperWarning(t *testing.T) {
 	message := "test message"
 	exemplar := fmt.Sprintf("%s %s\n", info.title, message)
 
-	New(&buf, LevelAll, "", FlagTitle)
+	err := New(&buf, LevelAll, "", FlagTitle)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	Warning(message)
 
 	if buf.String() != exemplar {

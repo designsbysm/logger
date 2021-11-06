@@ -9,7 +9,10 @@ func TestShouldCreateWriter(t *testing.T) {
 	writers = []options{}
 
 	var buf bytes.Buffer
-	New(&buf, LevelDebug, "", FlagNone)
+	err := New(&buf, LevelDebug, "", FlagNone)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	if len(writers) == 0 {
 		t.Errorf("should have writer, got: %v", writers)
