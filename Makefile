@@ -16,4 +16,4 @@ lint:
 	golangci-lint run .
 
 test:
-	go test -race 
+	go test -cover -race
