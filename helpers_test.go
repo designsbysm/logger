@@ -2,6 +2,8 @@ package timber
 
 import (
 	"bytes"
+	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"testing"
 )
@@ -82,6 +84,25 @@ func TestHelperInfo(t *testing.T) {
 	}
 }
 
+func TestHelperWarning(t *testing.T) {
+	var buf bytes.Buffer
+
+	info := getLevelInfo(LevelWarning)
+	message := "test message"
+	exemplar := fmt.Sprintf("%s %s\n", info.title, message)
+
+	err := New(&buf, LevelAll, "", FlagTitle)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	Warning(message)
+
+	if buf.String() != exemplar {
+		t.Errorf("should be %s, got: %s", exemplar, buf.String())
+	}
+}
+
 func TestHelperStruct(t *testing.T) {
 	var buf bytes.Buffer
 
@@ -101,21 +122,54 @@ func TestHelperStruct(t *testing.T) {
 	}
 }
 
-func TestHelperWarning(t *testing.T) {
-	var buf bytes.Buffer
+type testStruct struct {
+	Color string
+	Level int
+	Title string
+}
 
-	info := getLevelInfo(LevelWarning)
-	message := "test message"
-	exemplar := fmt.Sprintf("%s %s\n", info.title, message)
+func TestHelperStructToJSON(t *testing.T) {
+	var buf bytes.Buffer
 
 	err := New(&buf, LevelAll, "", FlagTitle)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	Warning(message)
+	message := testStruct{
+		Color: "red",
+		Level: 1,
+		Title: "test",
+	}
 
-	if buf.String() != exemplar {
-		t.Errorf("should be %s, got: %s", exemplar, buf.String())
+	StructToJSON(message)
+
+	b, _ := json.MarshalIndent(message, "", "  ")
+
+	if !bytes.Contains(buf.Bytes(), b) {
+		t.Errorf("should contain %s, got: %s", string(b), buf.String())
+	}
+}
+
+func TestHelperStructToXML(t *testing.T) {
+	var buf bytes.Buffer
+
+	err := New(&buf, LevelAll, "", FlagTitle)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	message := testStruct{
+		Color: "red",
+		Level: 1,
+		Title: "test",
+	}
+
+	StructToXML(message)
+
+	b, _ := xml.MarshalIndent(message, "", "  ")
+
+	if !bytes.Contains(buf.Bytes(), b) {
+		t.Errorf("should contain %s, got: %s", string(b), buf.String())
 	}
 }
