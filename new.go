@@ -3,7 +3,6 @@ package timber
 import (
 	"errors"
 	"io"
-	"os"
 )
 
 type options struct {
@@ -20,8 +19,6 @@ func New(writer io.Writer, level int, timestamp string, flags int) error {
 	if writer == nil {
 		return errors.New("io.Writer is required")
 	}
-
-	defaultWriter = os.Stdout
 
 	newWriter := options{
 		flags:     flags,

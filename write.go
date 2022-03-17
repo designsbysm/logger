@@ -2,12 +2,17 @@ package timber
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"time"
 )
 
 func Write(level int, args ...interface{}) {
 	if len(writers) == 0 {
+		if defaultWriter == nil {
+			defaultWriter = os.Stdout
+		}
+
 		fmt.Fprintln(defaultWriter, colorError+"timber.Write Error: no log writers defined, defaulting to os.Stdout"+colorReset)
 
 		newWriter := options{
