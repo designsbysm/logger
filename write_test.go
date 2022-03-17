@@ -178,16 +178,17 @@ func TestShouldReportNothingToLog(t *testing.T) {
 	}
 }
 
-func TestShouldPanicWithoutWriters(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Errorf("did not panic")
-		}
-	}()
+func TestShouldWarnWithoutWriters(t *testing.T) {
+	var buf bytes.Buffer
 
 	writers = []options{}
+	defaultWriter = &buf
 
 	Write(LevelError, "test message")
+
+	if !strings.Contains(buf.String(), "timber.Write Error:") {
+		t.Errorf("should report error, got: %s", buf.String())
+	}
 }
 
 type errorWriter struct{}

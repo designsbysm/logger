@@ -1,7 +1,6 @@
 package timber
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -9,7 +8,16 @@ import (
 
 func Write(level int, args ...interface{}) {
 	if len(writers) == 0 {
-		panic(errors.New("timber.Write: no log writers defined"))
+		fmt.Fprintln(defaultWriter, colorError+"timber.Write Error: no log writers defined, defaulting to os.Stdout"+colorReset)
+
+		newWriter := options{
+			flags:     FlagNone,
+			level:     LevelAll,
+			timestamp: "[15:04:05]",
+			writer:    defaultWriter,
+		}
+
+		writers = append(writers, newWriter)
 	} else if level < LevelCritical {
 		return
 	}
